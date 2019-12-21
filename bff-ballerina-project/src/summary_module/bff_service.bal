@@ -11,15 +11,15 @@ type SummaryDetails record {
     } driver;
 };
 
-service summary on new http:Listener(8081) {
+service vehicle on new http:Listener(8081) {
 
     @http:ResourceConfig {
-        path:"/vehicle/{id}"    
+        path:"/{id}/summary"    
     }
-    resource function vehicleSummary(http:Caller caller, http:Request request, string id) returns error? {
-        http:Response vehicleSummary = check vehicleBackend->get(<@untainted> string `/${id}`);
+    resource function summary(http:Caller caller, http:Request request, string id) returns error? {
+        http:Response vehicleDetails = check vehicleBackend->get(<@untainted> string `/${id}`);
 
-        var responsePayload = check <@untainted> vehicleSummary.getJsonPayload();   
+        var responsePayload = check <@untainted> vehicleDetails.getJsonPayload();   
         SummaryDetails summ = check SummaryDetails.constructFrom(responsePayload);
         json trimmedPayload = {vehicleNumber: summ.number, name: summ.driver.name, 
                                profileImage: summ.driver.profileImage, rating:summ.driver.rating};

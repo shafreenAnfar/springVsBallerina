@@ -28,12 +28,12 @@ public class SummaryRestApplication {
     }
 
     @RestController
-    @RequestMapping("/summary")
+    @RequestMapping("/vehicle")
     class SummaryVehicalController {
 
-        @RequestMapping("/vehicle/{id}")
+        @RequestMapping("/{id}/summary")
         public VehicleSummary vehicleSummary(@PathVariable("id") String id) {
-            String vehicleEndpoint = "http://localhost:9000/vehicle/" + id;
+            String vehicleEndpoint = "http://rent.vehicle.com:9000/vehicle/" + id;
             AvailableVehicles availableVehicles =
                     restTemplate.getForObject(vehicleEndpoint, AvailableVehicles.class);
             return VehicleSummeryMapper.INSTANCE.vehicleDetailToVehicleSummery(availableVehicles);
@@ -145,4 +145,5 @@ interface VehicleSummeryMapper {
     @Mapping(source = "number", target = "vehicleNumber")
     VehicleSummary vehicleDetailToVehicleSummery(AvailableVehicles availableVehicles);
 }
+
 
