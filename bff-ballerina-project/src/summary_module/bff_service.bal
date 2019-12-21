@@ -1,6 +1,6 @@
 import ballerina/http;
 
-http:Client vehicleBackend = new("http://localhost:9000/vehicle");
+http:Client vehicleBackend = new("http://rent.vehicle.com:9000/vehicle");
 
 type SummaryDetails record {
     string number;
@@ -27,5 +27,7 @@ service vehicle on new http:Listener(8081) {
         check caller->respond(trimmedPayload);
     }
 }
+
+
 
 
